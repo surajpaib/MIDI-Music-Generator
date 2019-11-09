@@ -8,7 +8,7 @@ import json
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MIDI Generation RNN')
     parser.add_argument('--sequence_length', default=20,
-                    help='Length of Sequence of input notes for which one output note is predicted')
+                    help='Length of Sequence of input notes for which one output note is predicted', type=int)
     parser.add_argument('--hidden_units', default=512,
                     help='Number of Hidden Units in the 3 layer LSTM', type=int)
     # parser.add_argument('--output_length', default=200,
