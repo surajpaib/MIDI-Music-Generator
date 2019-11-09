@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, CuDNNLSTM, Activation, Dropout
-from keras.callbacks import ModelCheckpoint, tensorboard_v1
+from keras.callbacks import ModelCheckpoint, TensorBoard
 import numpy as np
 
 
@@ -31,7 +31,7 @@ class MIDIRNN:
             verbose=1,        
             save_best_only=True,        
             mode='min'
-        ), tensorboard_v1.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
+        ), TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 ] 
 
     def train(self, X, y, iterations, batch_size):
