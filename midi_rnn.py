@@ -29,11 +29,11 @@ class MIDIRNN:
         self.model.add(Activation('softmax'))
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop' , metrics=['accuracy'])
         self.callbacks = [ModelCheckpoint(
-            "{}/checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5".format(train_dir), monitor='loss', 
+            "{}/checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5".format(self.train_dir), monitor='loss', 
             verbose=1,        
             save_best_only=True,        
             mode='min'
-        ), TensorBoard(log_dir='{}/logs'.format(train_dir), histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
+        ), TensorBoard(log_dir='{}/logs'.format(self.train_dir), histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 ] 
 
     def train(self, X, y, iterations, batch_size):
