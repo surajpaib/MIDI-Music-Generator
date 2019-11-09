@@ -3,6 +3,7 @@ from midi_reader import MIDIO
 from midi_data_generator import DataGenerator
 from midi_rnn import MIDIRNN
 import json
+import time
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MIDI Generation RNN')
     parser.add_argument('--notes', default=200,
@@ -26,5 +27,4 @@ if __name__ == "__main__":
     trainer.load_weights(args.WEIGHTS_PATH)
     X_test, output_map = datagen.generate_prediction_input()
     out = trainer.predict(X_test, output_map, args.notes)
-    print(out)
-
+    midi_note_parser.save_midi_output(out, "{}_generated.mid".format(time.time()))
