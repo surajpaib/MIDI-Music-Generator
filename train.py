@@ -10,13 +10,13 @@ if __name__ == "__main__":
     parser.add_argument('--sequence_length', default=20,
                     help='Length of Sequence of input notes for which one output note is predicted')
     parser.add_argument('--hidden_units', default=512,
-                    help='Number of Hidden Units in the 3 layer LSTM')
+                    help='Number of Hidden Units in the 3 layer LSTM', type=int)
     # parser.add_argument('--output_length', default=200,
     #                 help='Length of Output Sequence')                    
     parser.add_argument('--epochs', default=300,
-                    help='Number of epochs')
+                    help='Number of epochs', type=int)
     parser.add_argument('--batch_size', default=64,
-                    help='Batch size of input')
+                    help='Batch size of input', type=int)
     parser.add_argument('PATH', help= 'Path to MIDI Files')
 
 
@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     with open("training_args.json", "w") as fp:
         json.dump(args.__dict__, fp)
- 
+
     if not os.path.isdir("checkpoints"):
         os.mkdir("checkpoints")
 
