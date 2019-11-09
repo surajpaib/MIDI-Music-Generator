@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, CuDNNLSTM, Activation, Dropout
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, tensorboard_v1
 import numpy as np
 
 
@@ -31,10 +31,11 @@ class MIDIRNN:
             verbose=1,        
             save_best_only=True,        
             mode='min'
-        )] 
+        ), tensorboard_v1.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
+] 
 
     def train(self, X, y, iterations, batch_size):
-        self.model.fit(X, y, epochs=iterations, batch_size=batch_size, callbacks=self.callbacks)
+        self.model.fit(X, y, epochs=iterations, batch_size=batch_size, callbacks=self.callbacks, metrics=['accuracy', 'loss'])
     
 
     def load_weights(self, weights_path):
@@ -55,16 +56,3 @@ class MIDIRNN:
             X = X[1:len(X)]
 
         return pred_output
-
-
-if __name__ == "__main__":
-    from midi_reader import MIDIReader
-    from midi_data_generator import DataGenerator
-    midi_note_parser = MIDIReader("data/train")
-    midi_note_parser.load_notes()
-    datagen = DataGenerator(100)
-    X, y = datagen.generate_io_vectors(midi_note_parser.midi_notes)
-    print("Input :{} \n Output: {}".format(X, y))
-    trainer = MIDIRNN(X, datagen.total_notes)
-    trainer.initialize()
-    trainer.train(X, y, 100, 64)
