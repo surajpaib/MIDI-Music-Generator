@@ -25,7 +25,7 @@ class MIDIRNN:
         self.model.add(Dropout(0.3))
         self.model.add(Dense(self.output_size))
         self.model.add(Activation('softmax'))
-        self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+        self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop' , metrics=['accuracy', 'loss'])
         self.callbacks = [ModelCheckpoint(
             "checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5", monitor='loss', 
             verbose=1,        
@@ -35,7 +35,7 @@ class MIDIRNN:
 ] 
 
     def train(self, X, y, iterations, batch_size):
-        self.model.fit(X, y, epochs=iterations, batch_size=batch_size, callbacks=self.callbacks, metrics=['accuracy', 'loss'])
+        self.model.fit(X, y, epochs=iterations, batch_size=batch_size, callbacks=self.callbacks)
     
 
     def load_weights(self, weights_path):
