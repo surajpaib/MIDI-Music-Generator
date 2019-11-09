@@ -5,6 +5,8 @@ from midi_reader import MIDIO
 from midi_data_generator import DataGenerator
 from midi_rnn import MIDIRNN
 import json
+import time
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MIDI Generation RNN')
     parser.add_argument('--sequence_length', default=20,
@@ -25,8 +27,10 @@ if __name__ == "__main__":
     with open("training_args.json", "w") as fp:
         json.dump(args.__dict__, fp)
 
-    if not os.path.isdir("checkpoints"):
-        os.mkdir("checkpoints")
+    train_dir = "{}_{}".format(str(time.time()), json.dumps(args.__dict__))
+    os.mkdir(train_dir)
+    if not os.path.isdir("{}/checkpoints".format(train_dir)):
+        os.mkdir("{}/checkpoints".format(train_dir))
 
   
     midi_note_parser = MIDIO(args.PATH)
@@ -34,6 +38,6 @@ if __name__ == "__main__":
     datagen = DataGenerator(args.sequence_length)
     X, y = datagen.generate_io_vectors(midi_note_parser.midi_notes)
     print("Input :{} \n Output: {}".format(X, y))
-    trainer = MIDIRNN(X, datagen.total_notes)
+    trainer = MIDIRNN(X, datagen.total_notes, train_dir)
     trainer.initialize(hidden_units=args.hidden_units)
     trainer.train(X, y, args.epochs, args.batch_size)

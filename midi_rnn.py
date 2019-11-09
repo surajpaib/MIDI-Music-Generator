@@ -6,7 +6,8 @@ import numpy as np
 
 
 class MIDIRNN:
-    def __init__(self, input_vector, output_size):
+    def __init__(self, input_vector, output_size,train_dir):
+        self.train_dir = train_dir
         self.input_vector = input_vector
         self.output_size = output_size
 
@@ -28,11 +29,11 @@ class MIDIRNN:
         self.model.add(Activation('softmax'))
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop' , metrics=['accuracy'])
         self.callbacks = [ModelCheckpoint(
-            "checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5", monitor='loss', 
+            "{}/checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5".format(train_dir), monitor='loss', 
             verbose=1,        
             save_best_only=True,        
             mode='min'
-        ), TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
+        ), TensorBoard(log_dir='{}/logs'.format(train_dir), histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 ] 
 
     def train(self, X, y, iterations, batch_size):
