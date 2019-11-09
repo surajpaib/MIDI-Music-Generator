@@ -10,7 +10,7 @@ class MIDIRNN:
         self.output_size = output_size
 
 
-    def initialize(self):
+    def initialize(self, hidden_units):
         self.model = Sequential()
         self.model.add(CuDNNLSTM(
         512,
@@ -18,14 +18,14 @@ class MIDIRNN:
         return_sequences=True
         ))
         self.model.add(Dropout(0.3))
-        self.model.add(CuDNNLSTM(512, return_sequences=True))
+        self.model.add(CuDNNLSTM(hidden_units, return_sequences=True))
         self.model.add(Dropout(0.3))
-        self.model.add(CuDNNLSTM(512))
+        self.model.add(CuDNNLSTM(hidden_units))
         self.model.add(Dense(256))
         self.model.add(Dropout(0.3))
         self.model.add(Dense(self.output_size))
         self.model.add(Activation('softmax'))
-        self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop' , metrics=['accuracy', 'loss'])
+        self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop' , metrics=['accuracy'])
         self.callbacks = [ModelCheckpoint(
             "checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5", monitor='loss', 
             verbose=1,        
@@ -42,10 +42,10 @@ class MIDIRNN:
         self.model.load_weights(weights_path)
 
 
-    def predict(self, X, int_to_note):
+    def predict(self, X, int_to_note, out_len):
         pred_output = []
         # generate 200 notes
-        for note_index in range(200):
+        for note_index in range(out_len):
             _X = np.reshape(X, (1, len(X), 1))
             _X = _X / float(self.output_size)
             y_pred = self.model.predict(_X, verbose=1)
