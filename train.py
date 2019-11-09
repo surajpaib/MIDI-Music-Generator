@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     with open("training_args.json", "w") as fp:
         json.dump(args.__dict__, fp)
-    iteration_values = json.dumps(args.__dict__)
+    iteration_values = args.__dict__
     
     train_dir = "{}_{}_{}_{}_{}".format(str(time.time()), iteration_values['sequence_length'], iteration_values['hidden_units'], iteration_values['batch_size'], iteration_values['epochs'])
     os.mkdir(train_dir)
