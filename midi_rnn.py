@@ -29,7 +29,7 @@ class MIDIRNN:
         self.model.add(Activation('softmax'))
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop' , metrics=['accuracy'])
         self.callbacks = [ModelCheckpoint(
-            "{}/checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5".format(self.train_dir), monitor='loss', 
+            self.train_dir + "/checkpoints/weights_{epoch:02d}_loss_{loss:.4f}.hdf5", monitor='loss', 
             verbose=1,        
             save_best_only=True,        
             mode='min'
