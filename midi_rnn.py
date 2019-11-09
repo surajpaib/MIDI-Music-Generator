@@ -4,6 +4,7 @@ from keras.callbacks import ModelCheckpoint, TensorBoard
 import numpy as np
 
 
+
 class MIDIRNN:
     def __init__(self, input_vector, output_size):
         self.input_vector = input_vector
@@ -35,7 +36,7 @@ class MIDIRNN:
 ] 
 
     def train(self, X, y, iterations, batch_size):
-        self.model.fit(X, y, epochs=iterations, batch_size=batch_size, callbacks=self.callbacks)
+        self.model.fit(X, y, epochs=iterations, batch_size=batch_size, callbacks=self.callbacks, validation_split=0.2)
     
 
     def load_weights(self, weights_path):

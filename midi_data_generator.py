@@ -1,6 +1,5 @@
 import numpy as np
 from keras.utils import np_utils
-
 class DataGenerator:
     def __init__(self, length):
         self.length = length
@@ -26,6 +25,7 @@ class DataGenerator:
         self.input_vec = np.reshape(self.input_vector, (len(self.input_vector), self.length, 1))
         self.input_vec = self.input_vec / float(self.total_notes)
         self.output_vec = np_utils.to_categorical(self.output_vector)
+
         return self.input_vec, self.output_vec
 
     def generate_prediction_input(self):
