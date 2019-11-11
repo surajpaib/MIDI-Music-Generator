@@ -1,7 +1,7 @@
 
 # MIDI-Music-Generator
 
-MIDI Music Generator based on code from https://github.com/Skuldur/Classical-Piano-Composer.git
+MIDI Music Generator based on code from https://github.com/Skuldur/Classical-Piano-Composer.git for an Assignment from Advanced Concepts in Machine Learning
 
 ## Install
 Setup Dependencies and Fetch Code.
