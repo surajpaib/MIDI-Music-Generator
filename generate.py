@@ -23,7 +23,7 @@ if __name__ == "__main__":
     X, y = datagen.generate_io_vectors(midi_note_parser.midi_notes)
     print("Input :{} \n Output: {}".format(X, y))
     trainer = MIDIRNN(X, datagen.total_notes)
-    trainer.initialize(hidden_units=training_args['hidden_units'])
+    trainer.initialize(hidden_units=training_args['hidden_units'], '')
     trainer.load_weights(args.WEIGHTS_PATH)
     X_test, output_map = datagen.generate_prediction_input()
     out = trainer.predict(X_test, output_map, args.notes)
