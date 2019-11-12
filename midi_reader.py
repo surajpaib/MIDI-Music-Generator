@@ -18,13 +18,12 @@ class MIDIO:
                 notes_list = instruments.parts[0].recurse()
             else:
                 notes_list = midi.flat.notes
-        
-        for _note in notes_list:
-            if isinstance(_note, note.Note):
-                self.midi_notes.append(str(_note.pitch))
-            elif isinstance(_note, chord.Chord):
-                self.midi_notes.append('.'.join(str(n) for n in _note.normalOrder))
-
+            for _note in notes_list:
+                if isinstance(_note, note.Note):
+                    self.midi_notes.append(str(_note.pitch))
+                
+                elif isinstance(_note, chord.Chord):
+                    self.midi_notes.append('.'.join(str(n) for n in _note.normalOrder))
 
     def save_midi_output(self, out, midi_out_file):
         offset = 0
@@ -55,3 +54,8 @@ class MIDIO:
         except:
             print("ERROR: Could not write to MIDI File.")
             
+
+if __name__ == "__main__":
+    midi_reader = MIDIO("/home/suraj/MSAI/Advanced Concepts of Machine Learning/Assignment_2_MIDI_RNN/data/jazz_train")
+    midi_reader.load_notes()
+    print(len(midi_reader.midi_notes))
