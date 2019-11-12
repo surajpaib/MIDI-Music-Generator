@@ -8,7 +8,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MIDI Generation RNN')
     parser.add_argument('--notes', default=200,
                     help='Number of notes to generate')
-        parser.add_argument('--output_scheme', default="max",
+    parser.add_argument('--output_scheme', default="max",
                     help='Output Note to select')
     # parser.add_argument('--output_length', default=200,
     #                 help='Length of Output Sequence')                    

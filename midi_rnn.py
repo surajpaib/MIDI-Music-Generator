@@ -57,9 +57,13 @@ class MIDIRNN:
 
                 index = np.argmax(y_pred)
             elif output_scheme == "prob":
-                index = np.random.choice(y_pred, y_pred)
+                y_pred = np.reshape(y_pred, (-1))
+                value = np.random.choice(y_pred, p=y_pred)
+                index = np.where(y_pred == value)[0][0]
             elif output_scheme == "alt":
-                index = sorted(list(y_pred), reverse=True)[int(last_val)]
+                y_pred = np.reshape(y_pred, (-1))
+                value = sorted(list(y_pred), reverse=True)[int(last_val)]
+                index = np.where(y_pred == value)[0][0]
                 last_val = not(last_val)
                 
             result = int_to_note[index]

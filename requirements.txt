@@ -1,0 +1,4 @@
+music21==5.7.0
+keras==2.3.1
+numpy
+argparse==1.1
