@@ -1,4 +1,4 @@
-from music21 import converter, instrument, note, chord
+from music21 import converter, instrument, note, chord, stream
 import glob
 import logging
 logging.getLogger().setLevel(logging.INFO)
@@ -56,6 +56,6 @@ class MIDIO:
             
 
 if __name__ == "__main__":
-    midi_reader = MIDIO("/home/suraj/MSAI/Advanced Concepts of Machine Learning/Assignment_2_MIDI_RNN/data/jazz_train")
+    midi_reader = MIDIO("/home/suraj/MSAI/Advanced Concepts of Machine Learning/Assignment_2_MIDI_RNN/data/maroon5")
     midi_reader.load_notes()
     print(len(midi_reader.midi_notes))

@@ -44,14 +44,24 @@ class MIDIRNN:
         self.model.load_weights(weights_path)
 
 
-    def predict(self, X, int_to_note, out_len):
+    def predict(self, X, int_to_note, out_len, output_scheme="max"):
         pred_output = []
+        last_val = True
+
         # generate 200 notes
         for note_index in range(out_len):
             _X = np.reshape(X, (1, len(X), 1))
             _X = _X / float(self.output_size)
             y_pred = self.model.predict(_X, verbose=1)
-            index = np.argmax(y_pred)
+            if output_scheme == "max":
+
+                index = np.argmax(y_pred)
+            elif output_scheme == "prob":
+                index = np.random.choice(y_pred, y_pred)
+            elif output_scheme == "alt"
+                index = sorted(list(y_pred), reverse=True)[int(last_val)]
+                last_val = not(last_val)
+                
             result = int_to_note[index]
             pred_output.append(result)
             X.append(index)
